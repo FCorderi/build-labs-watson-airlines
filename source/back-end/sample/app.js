@@ -1,26 +1,39 @@
-//Schemas
+//Schemas imports
 const Flights = require("./Flights.schema");
 const Airlines = require("./Airlines.schema");
 const Airports = require("./Airports.schema");
 
+//Controler import
+const express = require("express");
+const app = express();
+const controller = require("./sample.Controller");
 
-//connection to mongo
+app.get("/samples", controller.sample);
+
+
+
+//connection to mongo imports
 const path = require("path");
 const mongoose = require('mongoose');
 const mongo = require("./mongodb");
+
+var http = require('http') , https = require('https') , expresss = require('express') , appp = expresss();
 
 //Returns a list with all the documents in the Airlines collection in the database
 async function associatedAirlines() {
     try {
         const airlines = await Airlines.find({});
-        return airlines;
+        app.get('/samples', (req, res) => {
+            res.json({message: airlines });
+        });
+        return airlines.json;
     } catch (error) {
         console.log(error);
         throw error;
     }
 }
 
-//
+
 function aboutWatsonAirlines() {
     return "Watson Airlines is a one of the largest airlines in America. With over 30 years of history, we connect people to opportunities while expanding the understanding of our planet and the people within it. We offer our one-of-a-kind value and Hospitality at over 50 airports across more than 15 countries. In addition, we are members of the International Air Transport Association (IATA), a trade association that represents over 300 airlines, equivalent to about 83% of total air traffic. This allows us to operate safely, securely, efficiently, and economically under clearly defined rules."
 }
@@ -75,12 +88,24 @@ async function main() {
     const flights = await SearchForFlights("SFO", "DFW", "2023-01-01");
     console.log(flights);
 
-    console.log("List of Associated Airlines:");
-    const associatedAirlnes = await associatedAirlines();
-    console.log(associatedAirlnes);
+    // console.log("List of Associated Airlines:");
+    // const associatedAirlnes = await associatedAirlines();
+    // console.log(associatedAirlnes);
 
-    const flightInformation = await requestFlightInformation('63e53b3d123da255099f26c2');
-    console.log(flightInformation);
+    // const flightInformation = await requestFlightInformation('63e53b3d123da255099f26c2');
+    // console.log(flightInformation);
+
+
+    app.get("/samples", controller.sample);
+
+    app.get('/', (req, res) => {
+        res.json({message: flights });
+    });
+
+
+    app.listen(3000, () => {
+        console.log("La aplicación está escuchando en el puerto 3000.");
+    });
 }
 
 main();

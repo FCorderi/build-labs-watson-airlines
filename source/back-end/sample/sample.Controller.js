@@ -11,25 +11,7 @@ const Sample = require("./Flights.schema");
  */
 const sample = async (req = request, res = response) => {
     // Returns list of Sample objects under "result" field
-    /* #swagger.responses[200] = {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                    "type" : "object",
-                    "properties" : {
-                        "result" : {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/Sample"
-                            }
-                        }
-                    }
-                }
-              }
-            }
-        }   
-    */
+
     try {
         // Your Code Goes Here!!!!
         
